@@ -1,0 +1,34 @@
+
+{
+  "host": "127.0.0.1",
+  "port": 4173,
+
+  // Optional: use a registered domain if your CMP
+  // does not support localhost.
+  "lighthouseHost": null,
+
+  "variants": [
+    // Keep the baseline unchanged.
+    {
+      "id": "baseline",
+      "label": "Baseline (no CMP)",
+      "snippet": null
+    }
+
+    // To add a CMP:
+    // 1. Create snippets/provider-name.html
+    // 2. Paste your CMP's integration code into that file.
+    // 3. Add a comma after the baseline entry above.
+    // 4. Uncomment and customize the following entry.
+
+    // ,{
+    //   "id": "provider-name",
+    //   "label": "Provider Name",
+    //   "snippet": "snippets/provider-name.html"
+    // }
+
+    // Optional: if this CMP requires a registered domain,
+    // add "host": "your-registered-domain.com"
+    // to its entry.
+  ]
+}

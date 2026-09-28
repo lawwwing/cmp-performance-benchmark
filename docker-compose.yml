@@ -1,0 +1,37 @@
+services:
+  bench:
+    build: .
+    ports:
+      - "4173:4173"
+    environment:
+      CMP_BENCH_BIND: "0.0.0.0"
+    volumes:
+      - ./snippets:/app/snippets:ro
+      - ./src:/app/src:ro
+      - ./assets:/app/assets:ro
+      - ./benchmark.config.json:/app/benchmark.config.json:ro
+    healthcheck:
+      test:
+        - CMD
+        - python3
+        - -c
+        - import urllib.request; urllib.request.urlopen('http://127.0.0.1:4173/baseline/', timeout=3)
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+  lighthouse:
+    profiles: ["lighthouse"]
+    build:
+      context: .
+      dockerfile: Dockerfile.lighthouse
+    network_mode: host
+    depends_on:
+      bench:
+        condition: service_healthy
+    volumes:
+      - .:/app
+    environment:
+      CHROME_PATH: /usr/bin/chromium
+    command: ["python3", "scripts/lighthouse.py", "--runs", "10", "--no-sandbox"]

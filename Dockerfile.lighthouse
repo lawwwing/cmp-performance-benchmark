@@ -1,0 +1,27 @@
+FROM node:22-bookworm-slim
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        ca-certificates \
+        chromium \
+        fonts-liberation \
+        python3 \
+    && rm -rf /var/lib/apt/lists/* \
+    && npm install -g --silent lighthouse \
+    && chromium --version \
+    && lighthouse --version
+
+ENV CHROME_PATH=/usr/bin/chromium \
+    PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+RUN chown node:node /app
+
+USER node
+
+COPY --chown=node:node . .
+
+CMD ["python3", "scripts/lighthouse.py", "--runs", "5", "--no-sandbox"]

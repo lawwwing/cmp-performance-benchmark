@@ -1,0 +1,12 @@
+<!--
+  Example only. This file is not a benchmark variant.
+
+  1. Copy it to snippets/<name>.html
+  2. Replace this comment with that vendor's documented default install snippet, pasted unchanged.
+  3. Add an entry to benchmark.config.json:
+
+     { "id": "<name>", "label": "<Vendor>", "snippet": "snippets/<name>.html" }
+
+  The server inserts this file verbatim between the CMP markers.
+  Delete these instructions before measuring.
+-->
